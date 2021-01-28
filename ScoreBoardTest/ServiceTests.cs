@@ -27,5 +27,39 @@ namespace ScoreBoardTest
             //Assert
             act.Should().Throw<ArgumentNullException>();
         }
+
+        [TestMethod]
+        public void Service_StartGameWithEmptyHomeTeam_ShouldArgumentNullException()
+        {
+            //Arrange
+            var game = new Game
+            {
+                HomeTeam = string.Empty,
+                AwayTeam = "Canada"
+            };
+
+            //Act
+            Action act = () => _service.StartGame(game);
+
+            //Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [TestMethod]
+        public void Service_StartGameWithEmptyAwayTeam_ShouldArgumentNullException()
+        {
+            //Arrange
+            var game = new Game
+            {
+                HomeTeam = "Mexico",
+                AwayTeam = string.Empty
+            };
+
+            //Act
+            Action act = () => _service.StartGame(game);
+
+            //Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
     }
 }

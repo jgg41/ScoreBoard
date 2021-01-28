@@ -7,7 +7,7 @@ namespace ScoreBoard
     {
         public void StartGame(Game game)
         {
-            if (game == null)
+            if (game == null || string.IsNullOrWhiteSpace(game.HomeTeam) || string.IsNullOrWhiteSpace(game.AwayTeam))
             {
                 throw new ArgumentNullException();
             }
