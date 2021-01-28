@@ -18,6 +18,8 @@ namespace ScoreBoard
             {
                 throw new Exception("Game already started!");
             }
+
+            Games.Add($"{game.HomeTeam} - {game.AwayTeam}", game);
         }
     }
 }
