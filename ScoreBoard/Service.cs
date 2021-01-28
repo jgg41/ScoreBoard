@@ -27,6 +27,11 @@ namespace ScoreBoard
             Games.Remove(key);
         }
 
+        public void UpdateGame(string key)
+        {
+            ValidateKey(key);
+        }
+
         private void ValidateGame(Game game)
         {
             if (game == null || string.IsNullOrWhiteSpace(game.HomeTeam) || string.IsNullOrWhiteSpace(game.AwayTeam))

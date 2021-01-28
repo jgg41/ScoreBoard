@@ -153,5 +153,19 @@ namespace ScoreBoardTest
             _service.Games.Values.First().AwayTeamScore.Should().Be(0);
             _service.Games.Values.First().TotalScore.Should().Be(0);
         }
+
+        [TestMethod]
+        public void Service_UpdateGameWithEmptyKey_ShouldThrowArgumentNullException()
+        {
+            //Arrange
+            var key = string.Empty;
+
+            //Act
+            Action act = () => _service.UpdateGame(key);
+
+            //Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
     }
 }
