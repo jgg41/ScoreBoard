@@ -34,6 +34,10 @@ namespace ScoreBoard
 
             var gameToUpdate = Games[key];
             if(gameToUpdate == null) throw new Exception();
+
+            gameToUpdate.HomeTeamScore = homeTeamScore;
+            gameToUpdate.AwayTeamScore = awayTeamScore;
+            gameToUpdate.TotalScore = homeTeamScore + awayTeamScore;
         }
 
         private void ValidateGame(Game game)

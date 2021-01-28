@@ -19,7 +19,6 @@ namespace ScoreBoard
 
         public Game()
         {
-            TotalScore = HomeTeamScore + AwayTeamScore;
             InsertedTime = DateTime.UtcNow;
         }
     }

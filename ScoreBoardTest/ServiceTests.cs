@@ -205,5 +205,26 @@ namespace ScoreBoardTest
             //Assert
             act.Should().Throw<Exception>().WithMessage("The given key 'someKey' was not present in the dictionary.");
         }
+
+        [TestMethod]
+        public void Service_UpdateGame_ShouldUpdateScores()
+        {
+            //Arrange
+            var homeTeamScore = 1;
+            var awayTeamScore = 2;
+            var key = $"{_game1.HomeTeam} - {_game1.AwayTeam}";
+            _service.StartGame(_game1);
+
+            //Act
+            _service.UpdateGame(key, homeTeamScore, awayTeamScore);
+
+            //Assert
+            _service.Games.Count.Should().Be(1);
+            _service.Games.Values.First().HomeTeam.Should().Be("Mexico");
+            _service.Games.Values.First().AwayTeam.Should().Be("Canada");
+            _service.Games.Values.First().HomeTeamScore.Should().Be(1);
+            _service.Games.Values.First().AwayTeamScore.Should().Be(2);
+            _service.Games.Values.First().TotalScore.Should().Be(3);
+        }
     }
 }
