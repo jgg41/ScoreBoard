@@ -10,11 +10,16 @@ namespace ScoreBoardTest
     public class ServiceTests
     {
         private Service _service;
+        private Game _game1;
+        private Game _game2;
 
         [TestInitialize]
         public void Setup()
         {
             _service = new Service();
+
+            _game1 = new Game {HomeTeam = "Mexico", AwayTeam = "Canada"};
+            _game2 = new Game {HomeTeam = "Spain", AwayTeam = "Brazil"};
         }
 
         [TestMethod]
@@ -67,21 +72,11 @@ namespace ScoreBoardTest
         public void Service_StartGameWithExistingGame_ShouldThrowException()
         {
             //Arrange
-            var game1 = new Game
-            {
-                HomeTeam = "Mexico",
-                AwayTeam = "Canada"
-            };
-
-            var game2 = new Game
-            {
-                HomeTeam = "Mexico",
-                AwayTeam = "Canada"
-            };
+            var game11 = new Game { HomeTeam = "Mexico", AwayTeam = "Canada" };
 
             //Act
-            _service.Games.Add($"{game1.HomeTeam} - {game1.AwayTeam}", game1);
-            Action act = () => _service.StartGame(game2);
+            _service.Games.Add($"{_game1.HomeTeam} - {_game1.AwayTeam}", _game1);
+            Action act = () => _service.StartGame(game11);
 
             //Assert
             act.Should().Throw<Exception>().WithMessage("Game already started!");
@@ -94,21 +89,10 @@ namespace ScoreBoardTest
         public void Service_StartGame_ShouldAddGame()
         {
             //Arrange
-            var game1 = new Game
-            {
-                HomeTeam = "Mexico",
-                AwayTeam = "Canada"
-            };
-
-            var game2 = new Game
-            {
-                HomeTeam = "Spain",
-                AwayTeam = "Brazil"
-            };
+            _service.StartGame(_game1);
 
             //Act
-            _service.StartGame(game1);
-            _service.StartGame(game2);
+            _service.StartGame(_game2);
 
             //Assert
             _service.Games.Count.Should().Be(2);
@@ -141,23 +125,12 @@ namespace ScoreBoardTest
         public void Service_FinishGame_ShouldRemoveGame()
         {
             //Arrange
-            var game1 = new Game
-            {
-                HomeTeam = "Mexico",
-                AwayTeam = "Canada"
-            };
-
-            var game2 = new Game
-            {
-                HomeTeam = "Spain",
-                AwayTeam = "Brazil"
-            };
-
-            _service.StartGame(game1);
-            _service.StartGame(game2);
+            var key = $"{_game1.HomeTeam} - {_game1.AwayTeam}";
+            _service.StartGame(_game1);
+            _service.StartGame(_game2);
 
             //Act
-            _service.FinishGame($"{game1.HomeTeam} - {game1.AwayTeam}");
+            _service.FinishGame(key);
 
             //Assert
             _service.Games.Count.Should().Be(1);

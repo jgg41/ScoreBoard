@@ -10,14 +10,17 @@ namespace ScoreBoard
         public void StartGame(Game game)
         {
             ValidateGame(game);
-            CheckIfGameAlreadyStarted($"{game.HomeTeam} - {game.AwayTeam}");
 
-            Games.Add($"{game.HomeTeam} - {game.AwayTeam}", game);
+            var key = $"{game.HomeTeam} - {game.AwayTeam}";
+
+            if (GameExists(key)) throw new Exception("Game already started!");
+
+            Games.Add(key, game);
         }
 
         public void FinishGame(string key)
         {
-            if (!Games.ContainsKey(key)) throw new Exception("Game does not exist!");
+            if (!GameExists(key)) throw new Exception("Game does not exist!");
 
             Games.Remove(key);
         }
@@ -30,12 +33,9 @@ namespace ScoreBoard
             }
         }
 
-        private void CheckIfGameAlreadyStarted(string key)
+        private bool GameExists(string key)
         {
-            if (Games.ContainsKey(key))
-            {
-                throw new Exception("Game already started!");
-            }
+            return Games.ContainsKey(key);
         }
     }
 }
