@@ -276,6 +276,19 @@ namespace ScoreBoardTest
             result.Last().Value.TotalScore.Should().Be(4);
         }
 
+        [TestMethod]
+        public void Service_GetScoreBoardWithAllGamesFinished_ShouldReturnEmpty()
+        {
+            //Arrange
+            FinishGames();
+
+            //Act
+            var result = _service.GetScoreBoard();
+
+            //Assert
+            result.Count().Should().Be(0);
+        }
+
         private void StartPlaying()
         {
             var key1 = $"{_game1.HomeTeam} - {_game1.AwayTeam}";
@@ -295,6 +308,33 @@ namespace ScoreBoardTest
             _service.UpdateGame(key3, 2, 2);
             _service.UpdateGame(key4, 6, 6);
             _service.UpdateGame(key5, 3, 1);
+        }
+
+        private void FinishGames()
+        {
+            var key1 = $"{_game1.HomeTeam} - {_game1.AwayTeam}";
+            var key2 = $"{_game2.HomeTeam} - {_game2.AwayTeam}";
+            var key3 = $"{_game3.HomeTeam} - {_game3.AwayTeam}";
+            var key4 = $"{_game4.HomeTeam} - {_game4.AwayTeam}";
+            var key5 = $"{_game5.HomeTeam} - {_game5.AwayTeam}";
+
+            _service.StartGame(_game1);
+            _service.StartGame(_game2);
+            _service.StartGame(_game3);
+            _service.StartGame(_game4);
+            _service.StartGame(_game5);
+
+            _service.UpdateGame(key1, 0, 5);
+            _service.UpdateGame(key2, 10, 2);
+            _service.UpdateGame(key3, 2, 2);
+            _service.UpdateGame(key4, 6, 6);
+            _service.UpdateGame(key5, 3, 1);
+
+            _service.FinishGame(key1);
+            _service.FinishGame(key2);
+            _service.FinishGame(key3);
+            _service.FinishGame(key4);
+            _service.FinishGame(key5);
         }
     }
 }
