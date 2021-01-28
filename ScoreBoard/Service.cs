@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ScoreBoard
 {
@@ -38,6 +39,11 @@ namespace ScoreBoard
             gameToUpdate.HomeTeamScore = homeTeamScore;
             gameToUpdate.AwayTeamScore = awayTeamScore;
             gameToUpdate.TotalScore = homeTeamScore + awayTeamScore;
+        }
+
+        public IOrderedEnumerable<KeyValuePair<string, Game>> GetScoreBoard()
+        {
+            return Games.OrderByDescending(c => c.Value.TotalScore).ThenByDescending(c => c.Value.InsertedTime);
         }
     }
 }
