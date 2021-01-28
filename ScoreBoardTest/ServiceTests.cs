@@ -161,11 +161,36 @@ namespace ScoreBoardTest
             var key = string.Empty;
 
             //Act
-            Action act = () => _service.UpdateGame(key);
+            Action act = () => _service.UpdateGame(key, 1, 1);
 
             //Assert
             act.Should().Throw<ArgumentNullException>();
         }
 
+        [TestMethod]
+        public void Service_UpdateGameWithInvalidHomeTeamScore_ShouldThrowArgumentOutOfRangeException()
+        {
+            //Arrange
+            const string key = "someKey";
+
+            //Act
+            Action act = () => _service.UpdateGame(key, -1, 1);
+
+            //Assert
+            act.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+        [TestMethod]
+        public void Service_UpdateGameWithInvalidAwayTeamScore_ShouldThrowArgumentOutOfRangeException()
+        {
+            //Arrange
+            const string key = "someKey";
+
+            //Act
+            Action act = () => _service.UpdateGame(key, 1, -1);
+
+            //Assert
+            act.Should().Throw<ArgumentOutOfRangeException>();
+        }
     }
 }

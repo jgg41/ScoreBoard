@@ -27,9 +27,10 @@ namespace ScoreBoard
             Games.Remove(key);
         }
 
-        public void UpdateGame(string key)
+        public void UpdateGame(string key, int homeTeamScore, int awayTeamScore)
         {
             ValidateKey(key);
+            ValidateScores(homeTeamScore, awayTeamScore);
         }
 
         private void ValidateGame(Game game)
@@ -50,6 +51,14 @@ namespace ScoreBoard
             if (string.IsNullOrWhiteSpace(key))
             {
                 throw new ArgumentNullException();
+            }
+        }
+
+        private void ValidateScores(int homeTeamScore, int awayTeamScore)
+        {
+            if (homeTeamScore < 0 || awayTeamScore < 0)
+            {
+                throw new ArgumentOutOfRangeException();
             }
         }
     }
