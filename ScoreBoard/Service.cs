@@ -20,6 +20,8 @@ namespace ScoreBoard
 
         public void FinishGame(string key)
         {
+            ValidateKey(key);
+
             if (!GameExists(key)) throw new Exception("Game does not exist!");
 
             Games.Remove(key);
@@ -36,6 +38,14 @@ namespace ScoreBoard
         private bool GameExists(string key)
         {
             return Games.ContainsKey(key);
+        }
+
+        private void ValidateKey(string key)
+        {
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentNullException();
+            }
         }
     }
 }

@@ -35,7 +35,7 @@ namespace ScoreBoardTest
         }
 
         [TestMethod]
-        public void Service_StartGameWithEmptyHomeTeam_ShouldArgumentNullException()
+        public void Service_StartGameWithEmptyHomeTeam_ShouldThrowArgumentNullException()
         {
             //Arrange
             var game = new Game
@@ -52,7 +52,7 @@ namespace ScoreBoardTest
         }
 
         [TestMethod]
-        public void Service_StartGameWithEmptyAwayTeam_ShouldArgumentNullException()
+        public void Service_StartGameWithEmptyAwayTeam_ShouldThrowArgumentNullException()
         {
             //Arrange
             var game = new Game
@@ -119,6 +119,19 @@ namespace ScoreBoardTest
 
             //Assert
             act.Should().Throw<Exception>().WithMessage("Game does not exist!");
+        }
+
+        [TestMethod]
+        public void Service_FinishGameWithEmptyKey_ShouldThrowArgumentNullException()
+        {
+            //Arrange
+            var key = string.Empty;
+
+            //Act
+            Action act = () => _service.FinishGame(key);
+
+            //Assert
+            act.Should().Throw<ArgumentNullException>();
         }
 
         [TestMethod]
