@@ -123,5 +123,49 @@ namespace ScoreBoardTest
             _service.Games.Values.Last().AwayTeamScore.Should().Be(0);
             _service.Games.Values.Last().TotalScore.Should().Be(0);
         }
+
+        [TestMethod]
+        public void Service_FinishGameWithNonExistingGame_ShouldThrowException()
+        {
+            //Arrange
+            const string key = "HomeTeam - AwayTeam";
+
+            //Act
+            Action act = () => _service.FinishGame(key);
+
+            //Assert
+            act.Should().Throw<Exception>().WithMessage("Game does not exist!");
+        }
+
+        [TestMethod]
+        public void Service_FinishGame_ShouldRemoveGame()
+        {
+            //Arrange
+            var game1 = new Game
+            {
+                HomeTeam = "Mexico",
+                AwayTeam = "Canada"
+            };
+
+            var game2 = new Game
+            {
+                HomeTeam = "Spain",
+                AwayTeam = "Brazil"
+            };
+
+            _service.StartGame(game1);
+            _service.StartGame(game2);
+
+            //Act
+            _service.FinishGame($"{game1.HomeTeam} - {game1.AwayTeam}");
+
+            //Assert
+            _service.Games.Count.Should().Be(1);
+            _service.Games.Values.First().HomeTeam.Should().Be("Spain");
+            _service.Games.Values.First().AwayTeam.Should().Be("Brazil");
+            _service.Games.Values.First().HomeTeamScore.Should().Be(0);
+            _service.Games.Values.First().AwayTeamScore.Should().Be(0);
+            _service.Games.Values.First().TotalScore.Should().Be(0);
+        }
     }
 }

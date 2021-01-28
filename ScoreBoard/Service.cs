@@ -15,6 +15,13 @@ namespace ScoreBoard
             Games.Add($"{game.HomeTeam} - {game.AwayTeam}", game);
         }
 
+        public void FinishGame(string key)
+        {
+            if (!Games.ContainsKey(key)) throw new Exception("Game does not exist!");
+
+            Games.Remove(key);
+        }
+
         private void ValidateGame(Game game)
         {
             if (game == null || string.IsNullOrWhiteSpace(game.HomeTeam) || string.IsNullOrWhiteSpace(game.AwayTeam))
