@@ -192,5 +192,18 @@ namespace ScoreBoardTest
             //Assert
             act.Should().Throw<ArgumentOutOfRangeException>();
         }
+
+        [TestMethod]
+        public void Service_UpdateGameWithNonExistingGame_ShouldThrowException()
+        {
+            //Arrange
+            const string key = "someKey";
+
+            //Act
+            Action act = () => _service.UpdateGame(key, 1, 1);
+
+            //Assert
+            act.Should().Throw<Exception>().WithMessage("The given key 'someKey' was not present in the dictionary.");
+        }
     }
 }

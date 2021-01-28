@@ -31,6 +31,9 @@ namespace ScoreBoard
         {
             ValidateKey(key);
             ValidateScores(homeTeamScore, awayTeamScore);
+
+            var gameToUpdate = Games[key];
+            if(gameToUpdate == null) throw new Exception();
         }
 
         private void ValidateGame(Game game)
